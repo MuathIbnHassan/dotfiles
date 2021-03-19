@@ -1,0 +1,2 @@
+plugins=(git zsh-completions zsh-syntax-highlighting zsh-autosuggestions history-substring-search you-should-use)
+autoload -U compinit && compinit
