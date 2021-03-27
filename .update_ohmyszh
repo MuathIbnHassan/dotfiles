@@ -1,0 +1,38 @@
+#!/bin/zsh
+RED=$(tput setaf 1)
+NC='\033[0m' # No Color
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+
+	echo "${RED}Updating homebrew${NC}"
+	brew update
+	brew upgrade
+	#brew upgrade --greedy
+
+	echo "\n${RED}Updating composer packages${NC}"
+	composer global update &
+
+	echo "\n${RED}Updating npm${NC}"
+	npm install -g npm &
+
+	npm install -g n &
+
+	wait
+	echo "done"
+fi
+
+foreach filedir ( $ZSH_CUSTOM/plugins/*/ )
+    echo "${RED}Updating $filedir ${NC}"
+    git -C $filedir pull &
+end
+
+foreach filedir ( $ZSH_CUSTOM/themes/*/ )
+    echo "${RED}Updating $filedir ${NC}"
+    git -C $filedir pull &
+end
+wait
+echo "done"
+
+echo "\n${RED}Updating ohmyzsh${NC}"
+omz update
+
